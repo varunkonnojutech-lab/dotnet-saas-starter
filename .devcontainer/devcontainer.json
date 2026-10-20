@@ -1,0 +1,1 @@
+{"customizations":{"vscode":{"extensions":["ms-dotnettools.csharp","dbaeumer.vscode-eslint","esbenp.prettier-vscode"]}},"features":{"ghcr.io/devcontainers/features/node:1":{}},"image":"mcr.microsoft.com/devcontainers/dotnet:1-8-bookworm","name":"dotnet-saas-starter","postCreateCommand":"dotnet restore SaasStarter.sln && cd frontend && npm install"}

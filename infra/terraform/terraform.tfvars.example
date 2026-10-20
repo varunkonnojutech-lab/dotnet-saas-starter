@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars and fill in. NEVER commit terraform.tfvars.
+sql_admin_password = "ChangeMe123$trong"
+jwt_key            = "replace-with-a-long-random-string-32-plus-chars"
+
+# Optional, Stripe test mode:
+# stripe_secret_key     = "sk_test_..."
+# stripe_webhook_secret = "whsec_..."

@@ -1,0 +1,37 @@
+# One-command run:  docker compose up --build
+#   Web app:  http://localhost:5173
+#   API docs: http://localhost:8080/swagger  (Development only)
+# Demo logins: demo@acme.test / Demo123$  and  demo@globex.test / Demo123$
+#
+# Stripe (optional, test mode): copy .env.example to .env and fill in your
+# sk_test_ key + price ids, then recreate the api service.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/SaasStarter.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # Override anything from appsettings via double-underscore env vars.
+      Jwt__Key: ${JWT_KEY:-dev-only-signing-key-change-in-production-9f3b7c1d}
+      Stripe__SecretKey: ${STRIPE_SECRET_KEY:-}
+      Stripe__WebhookSecret: ${STRIPE_WEBHOOK_SECRET:-}
+      Stripe__Prices__pro: ${STRIPE_PRICE_PRO:-}
+      Stripe__Prices__team: ${STRIPE_PRICE_TEAM:-}
+      Email__Provider: ${EMAIL_PROVIDER:-Console}
+    ports:
+      - "8080:8080"
+    volumes:
+      - api-data:/app/data
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  api-data:
